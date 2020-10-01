@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+
+from sqlalchemy import func
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Boolean, Integer, String, DateTime, Float
@@ -11,8 +13,8 @@ class Stock(CRUDModel):
     __table_args__ = {'sqlite_autoincrement': True}
     id = Column(Integer, primary_key=True )
     firma = Column(String(60), nullable=False, index=True)
-    zkratka = Column(String(10), nullable=False, index=True)
-    jmenovitaHodnota = Column(Float, nullable=False, index=False)
+    firma_zkratka = Column(String(10), nullable=False, index=True)
+    jmenovita_hodnota = Column(Float, nullable=False, index=False)
     posledni_cena = Column(Float, default=False)
     datum_insertu= Column(DateTime)
 
@@ -25,6 +27,5 @@ class Stock(CRUDModel):
         for k, v in kwargs.iteritems():
             setattr(self, k, v)
     @staticmethod
-    def find_by_prijmeni(prijmeni):
-        return db.session.query(LogUser1).filter_by(prijmeni = prijmeni).all()
-
+    def vypis_spolecny_radek():
+        return db.session.query(Stock.firma,func.avg(Stock.posledni_cena).label("Prumerna_cena")).group_by("firma")

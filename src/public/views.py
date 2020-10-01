@@ -4,7 +4,7 @@ Logic for dashboard related routes
 from flask import Blueprint, render_template
 from .forms import LogUserForm, secti,masoform, ocForm
 from ..data.database import db
-from ..data.models import LogUser, Stock,
+from ..data.models import LogUser, Stock
 blueprint = Blueprint('public', __name__)
 
 @blueprint.route('/', methods=['GET'])
@@ -36,7 +36,7 @@ def masof():
     if form.validate_on_submit():
         return render_template('public/masovystup.tmpl',hod1=form.hodnota1.data,hod2=form.hodnota2.data,suma=form.hodnota1.data+form.hodnota2.data)
     return render_template('public/maso.tmpl', form=form)
-
+# ----------------------------------------------------------------------------------------------------------------------
 @blueprint.route('/ocformular', methods=['GET','POST'])
 def ocapp():
     form = ocForm()
@@ -49,16 +49,27 @@ def ocapp():
             prom = str(form.a.data * form.b.data)
             return render_template("public/ocvystup.tmpl", prom=prom)
     return render_template("public/ocformular.tmpl", form=form)
-
+# ----------------------------------------------------------------------------------------------------------------------
 @blueprint.route("/simple_chart")
 def chart():
     legend = 'Monthly Data'
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 9, 8, 7, 6, 4, 7, 8]
     return render_template('public/graf.tmpl', values=values, labels=labels, legend=legend)
+# ----------------------------------------------------------------------------------------------------------------------
 @blueprint.route("/vloz_radek")
 def vloz_radek():
     text = "BlaBlaBla"
-    new_student = Stock(firma="AutoCont", grade="sdfdsa")
-    Stock.create(new_student)
+    Stock.create()
+    new_student = Stock(firma="AutoCont",firma_zkratka="xxx",\
+                        jmenovita_hodnota=100, posledni_cena=101)
+    db.session.add(new_student)
+    db.session.commit()
+
     return "OK"
+# ----------------------------------------------------------------------------------------------------------------------
+@blueprint.route("/vypis_table")
+def vypis_table():
+    pole=Stock.vypis_spolecny_radek()
+    #pole=db.session.query(Stock).all()
+    return render_template("vypis_tabulky.tmpl")
