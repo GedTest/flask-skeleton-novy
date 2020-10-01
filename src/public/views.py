@@ -72,4 +72,4 @@ def vloz_radek():
 def vypis_table():
     pole=Stock.vypis_spolecny_radek()
     #pole=db.session.query(Stock).all()
-    return render_template("vypis_tabulky.tmpl")
+    return render_template("public/vypis_tabulky.tmpl")

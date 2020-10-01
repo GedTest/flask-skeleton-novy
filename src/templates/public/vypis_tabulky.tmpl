@@ -1,0 +1,16 @@
+{% from "macros/fields.tmpl" import render_input_field, render_submit %}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Vypis tabulky {% endblock %}
+
+{% block content %}
+    <table>
+        {% for i in pole %}
+            <tr>
+                <td>{{ i.firma }}</td>
+                <td>{{ i.Prumerna_cena }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
