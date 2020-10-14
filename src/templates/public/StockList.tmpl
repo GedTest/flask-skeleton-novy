@@ -1,0 +1,14 @@
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}seznam akcii{% endblock %}
+
+{% block content %}
+    <h3>Seznam akcii</h3>
+    <table>
+        {% for n in list %}
+            <tr><td>{{ n.firma }}</td>
+            <td>{{ n.cena }}</td>
+            <td>{{ n.datum_insertu }}</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

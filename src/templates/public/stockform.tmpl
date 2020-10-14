@@ -1,0 +1,14 @@
+{% from "macros/fields.tmpl" import render_input_field render_submit %}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Pridat Akcie{% endblock %}
+
+{% block content %}
+  <h3>Pridat Akcie</h3>
+  <form method="POST" id='insert-form'>
+    {{ form.hidden_tag() }}
+    {{ render_input_field(form.firma) }}
+    {{ render_input_field(form.cena) }}
+    {{ render_submit() }}
+  </form>
+{% endblock %}

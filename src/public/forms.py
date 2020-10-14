@@ -50,3 +50,6 @@ class ocForm(Form):
     obrazec = SelectField("Obrazec", choices=[("1","Ctverec a"),\
                                               ("2", "Obdelnik ab"),\
                                               ("3","Trojuhelnik abc")], default=1)
+class ValidateStock(Form):
+    firma = TextField('Firma', validators=[InputRequired(message="Vyzadovano")])
+    cena = FloatField('Cena', validators=[InputRequired(message="Vyzadovano"),NumberRange(min=0)])
